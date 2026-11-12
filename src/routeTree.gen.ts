@@ -14,7 +14,10 @@ import { Route as ArchivedRouteImport } from './routes/archived'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as PromptsRouteImport } from './routes/prompts'
 import { Route as RecentRouteImport } from './routes/recent'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
+import { Route as EditorIdRouteImport } from './routes/editor.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,9 +44,24 @@ const RecentRoute = RecentRouteImport.update({
   path: '/recent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
   path: '/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionsIdRoute = CollectionsIdRouteImport.update({
+  id: '/collections/$id',
+  path: '/collections/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditorIdRoute = EditorIdRouteImport.update({
+  id: '/editor/$id',
+  path: '/editor/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -53,7 +71,10 @@ export interface FileRoutesByFullPath {
   '/favorites': typeof FavoritesRoute
   '/prompts': typeof PromptsRoute
   '/recent': typeof RecentRoute
+  '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
+  '/collections/$id': typeof CollectionsIdRoute
+  '/editor/$id': typeof EditorIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +82,10 @@ export interface FileRoutesByTo {
   '/favorites': typeof FavoritesRoute
   '/prompts': typeof PromptsRoute
   '/recent': typeof RecentRoute
+  '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
+  '/collections/$id': typeof CollectionsIdRoute
+  '/editor/$id': typeof EditorIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,14 +94,34 @@ export interface FileRoutesById {
   '/favorites': typeof FavoritesRoute
   '/prompts': typeof PromptsRoute
   '/recent': typeof RecentRoute
+  '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
+  '/collections/$id': typeof CollectionsIdRoute
+  '/editor/$id': typeof EditorIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/archived' | '/favorites' | '/prompts' | '/recent' | '/templates'
+    | '/'
+    | '/archived'
+    | '/favorites'
+    | '/prompts'
+    | '/recent'
+    | '/settings'
+    | '/templates'
+    | '/collections/$id'
+    | '/editor/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/archived' | '/favorites' | '/prompts' | '/recent' | '/templates'
+  to:
+    | '/'
+    | '/archived'
+    | '/favorites'
+    | '/prompts'
+    | '/recent'
+    | '/settings'
+    | '/templates'
+    | '/collections/$id'
+    | '/editor/$id'
   id:
     | '__root__'
     | '/'
@@ -85,7 +129,10 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/prompts'
     | '/recent'
+    | '/settings'
     | '/templates'
+    | '/collections/$id'
+    | '/editor/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -94,7 +141,10 @@ export interface RootRouteChildren {
   FavoritesRoute: typeof FavoritesRoute
   PromptsRoute: typeof PromptsRoute
   RecentRoute: typeof RecentRoute
+  SettingsRoute: typeof SettingsRoute
   TemplatesRoute: typeof TemplatesRoute
+  CollectionsIdRoute: typeof CollectionsIdRoute
+  EditorIdRoute: typeof EditorIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -134,11 +184,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/templates': {
       id: '/templates'
       path: '/templates'
       fullPath: '/templates'
       preLoaderRoute: typeof TemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections/$id': {
+      id: '/collections/$id'
+      path: '/collections/$id'
+      fullPath: '/collections/$id'
+      preLoaderRoute: typeof CollectionsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/editor/$id': {
+      id: '/editor/$id'
+      path: '/editor/$id'
+      fullPath: '/editor/$id'
+      preLoaderRoute: typeof EditorIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -150,7 +221,10 @@ const rootRouteChildren: RootRouteChildren = {
   FavoritesRoute: FavoritesRoute,
   PromptsRoute: PromptsRoute,
   RecentRoute: RecentRoute,
+  SettingsRoute: SettingsRoute,
   TemplatesRoute: TemplatesRoute,
+  CollectionsIdRoute: CollectionsIdRoute,
+  EditorIdRoute: EditorIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

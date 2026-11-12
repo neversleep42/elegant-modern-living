@@ -34,7 +34,7 @@ function useApplyTheme() {
 export function NewCollectionDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
   const addCollection = usePV((s) => s.addCollection);
   const [name, setName] = useState("");
-  const [color, setColor] = useState(COLLECTION_COLORS[0]);
+  const [color, setColor] = useState<string>(COLLECTION_COLORS[0] ?? "#A78BFA");
   const submit = () => { if (!name.trim()) return; addCollection(name.trim(), color); toast.success("Collection created"); setName(""); onOpenChange(false); };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
