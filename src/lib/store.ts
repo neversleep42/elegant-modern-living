@@ -136,7 +136,7 @@ export const usePV = create<State>()(
       markUsed: (id) => set((s) => ({ prompts: s.prompts.map((x) => (x.id === id ? { ...x, usageCount: x.usageCount + 1, usedAt: Date.now() } : x)) })),
       addCollection: (name, color) => {
         const id = uid();
-        set((s) => ({ collections: [...s.collections, { id, name, color: color ?? COLLECTION_COLORS[s.collections.length % COLLECTION_COLORS.length], description: "" }] }));
+        set((s) => ({ collections: [...s.collections, { id, name, color: color ?? COLLECTION_COLORS[s.collections.length % COLLECTION_COLORS.length] ?? "#A78BFA", description: "" }] }));
         return id;
       },
       updateCollection: (id, patch) => set((s) => ({ collections: s.collections.map((c) => (c.id === id ? { ...c, ...patch } : c)) })),
@@ -158,7 +158,7 @@ export const usePV = create<State>()(
   ),
 );
 
-export const extractVariables = (content: string) => Array.from(new Set(Array.from(content.matchAll(/\{\{\s*(\w+)\s*\}\}/g), (m) => m[1])));
+export const extractVariables = (content: string) => Array.from(new Set(Array.from(content.matchAll(/\{\{\s*(\w+)\s*\}\}/g), (m) => m[1] as string)));
 export const fillTemplate = (content: string, values: Record<string, string>) =>
   content.replace(/\{\{\s*(\w+)\s*\}\}/g, (all, k) => (values[k]?.trim() ? values[k] : all));
 export const humanize = (k: string) => k.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
